@@ -1,302 +1,695 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的导航页</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-image: url('http://files.unn.pp.ua/download/pictures%2Fbackground.jpg');
-            background-size: cover;
-            background-attachment: fixed;
-            background-position: center;
-            margin: 0;
-            padding: 20px;
-            color: #333;
-        }
-        
-        .header {
-            color: #fff;
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 10px;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-        }
-        
-        .search-container {
-            padding: 3rem;
-            width: 100%;
-            max-width: 500px;
-            margin: 0 auto 20px;
-        }
-        
-        .search-box {
-            width: 100%;
-            padding: 15px 18px;
-            font-size: 20px;
-            border: none;
-            border-radius: 20px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            outline: none;
-            background-color: rgba(255, 255, 255, 0.7);
-        }
-        
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            gap: 12px;
-        }
-        
-        .link-item {
-            background-color: rgba(255, 255, 255, 0.3);
-            border-radius: 15px;
-            padding: 12px;
-            transition: all 0.2s;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            height: 60px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .link-item:hover {
-            background-color: rgba(255, 255, 255, 0.85);
-            transform: translateY(-2px);
-            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
-        }
-        
-        .link-item a {
-            text-decoration: none;
-            color: #333;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-            height: 100%;
-            justify-content: center;
-        }
-        
-        .link-icon {
-            width: 24px;
-            height: 24px;
-            margin-bottom: 8px;
-            object-fit: contain;
-        }
-        
-        .link-text {
-            font-size: 14px;
-            text-align: center;
-            word-break: break-word;
-            max-width: 100%;
-        }
-        .foot_marker {
-            position: fixed;
-            bottom: 10px;
-            left: 0;
-            right: 0;
-            width: 100%;
-            text-align: center;
-            font-size: 12px;
-            color: rgba(255,255,255,0.8);
-            z-index: 999;
-            padding: 10px 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.3), transparent);
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Atelier — Modern Commerce</title>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "Inter",
+                     "Helvetica Neue", Arial, sans-serif;
+        background: #fafaf8;
+        color: #111;
+        overflow-x: hidden;
+    }
+
+    a {
+        color: inherit;
+        text-decoration: none;
+    }
+
+    /* =========================
+       NAVBAR
+    ========================= */
+
+    .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 76px;
+        z-index: 1000;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        padding: 0 5vw;
+
+        background: rgba(250, 250, 248, 0.78);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .logo {
+        font-size: 22px;
+        font-weight: 700;
+        letter-spacing: -0.8px;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 34px;
+        font-size: 14px;
+        color: #555;
+    }
+
+    .nav-links a {
+        transition: color .35s ease;
+    }
+
+    .nav-links a:hover {
+        color: #000;
+    }
+
+    .nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+    }
+
+    .cart {
+        font-size: 14px;
+        cursor: pointer;
+    }
+
+    .nav-button {
+        padding: 11px 19px;
+        border-radius: 100px;
+        background: #111;
+        color: white;
+        font-size: 13px;
+
+        transition:
+            transform .4s cubic-bezier(.2,.8,.2,1),
+            background .3s ease;
+    }
+
+    .nav-button:hover {
+        transform: translateY(-2px);
+        background: #333;
+    }
+
+    /* =========================
+       HERO
+    ========================= */
+
+    .hero {
+        min-height: 100vh;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        padding: 140px 6vw 90px;
+
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero-content {
+        max-width: 1000px;
+        text-align: center;
+
+        animation: heroEnter 1.2s cubic-bezier(.16,1,.3,1);
+    }
+
+    .eyebrow {
+        font-size: 12px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: #777;
+        margin-bottom: 28px;
+    }
+
+    .hero h1 {
+        font-size: clamp(60px, 9vw, 132px);
+        line-height: .9;
+        letter-spacing: -7px;
+        font-weight: 600;
+        max-width: 1000px;
+    }
+
+    .hero h1 span {
+        color: #888;
+    }
+
+    .hero-description {
+        max-width: 560px;
+        margin: 38px auto 0;
+
+        font-size: 18px;
+        line-height: 1.7;
+        color: #666;
+    }
+
+    .hero-buttons {
+        margin-top: 38px;
+
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+    }
+
+    .primary-btn,
+    .secondary-btn {
+        padding: 15px 25px;
+        border-radius: 100px;
+        font-size: 14px;
+
+        transition:
+            transform .5s cubic-bezier(.2,.8,.2,1),
+            box-shadow .5s ease,
+            background .3s ease;
+    }
+
+    .primary-btn {
+        background: #111;
+        color: white;
+    }
+
+    .secondary-btn {
+        background: white;
+        border: 1px solid #ddd;
+    }
+
+    .primary-btn:hover,
+    .secondary-btn:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 15px 35px rgba(0,0,0,.12);
+    }
+
+    /* =========================
+       PRODUCTS
+    ========================= */
+
+    .section {
+        padding: 120px 5vw;
+    }
+
+    .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+
+        margin-bottom: 45px;
+    }
+
+    .section-title {
+        font-size: 48px;
+        letter-spacing: -2px;
+    }
+
+    .section-subtitle {
+        color: #777;
+        font-size: 14px;
+        max-width: 300px;
+        line-height: 1.6;
+    }
+
+    .products {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 22px;
+    }
+
+    .product {
+        position: relative;
+        overflow: hidden;
+        border-radius: 22px;
+
+        background: #eee;
+
+        aspect-ratio: 4 / 5;
+
+        cursor: pointer;
+    }
+
+    .product-image {
+        width: 100%;
+        height: 100%;
+
+        object-fit: cover;
+
+        transition:
+            transform 1.2s cubic-bezier(.16,1,.3,1);
+    }
+
+    .product:hover .product-image {
+        transform: scale(1.07);
+    }
+
+    .product-overlay {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+
+        padding: 28px;
+
+        color: white;
+
+        background: linear-gradient(
+            transparent,
+            rgba(0,0,0,.75)
+        );
+
+        transform: translateY(10px);
+        opacity: .8;
+
+        transition:
+            transform .6s cubic-bezier(.16,1,.3,1),
+            opacity .5s ease;
+    }
+
+    .product:hover .product-overlay {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    .product-name {
+        font-size: 21px;
+        margin-bottom: 5px;
+    }
+
+    .product-price {
+        font-size: 14px;
+        opacity: .8;
+    }
+
+    /* =========================
+       STORY
+    ========================= */
+
+    .story {
+        min-height: 80vh;
+
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+
+        background: #111;
+        color: white;
+    }
+
+    .story-image {
+        min-height: 650px;
+        overflow: hidden;
+    }
+
+    .story-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+
+        transition: transform 1.5s cubic-bezier(.16,1,.3,1);
+    }
+
+    .story:hover img {
+        transform: scale(1.04);
+    }
+
+    .story-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        padding: 10vw;
+    }
+
+    .story-content span {
+        font-size: 12px;
+        letter-spacing: 2px;
+        color: #999;
+        text-transform: uppercase;
+        margin-bottom: 25px;
+    }
+
+    .story-content h2 {
+        font-size: clamp(45px, 5vw, 75px);
+        line-height: .95;
+        letter-spacing: -4px;
+        margin-bottom: 30px;
+    }
+
+    .story-content p {
+        color: #aaa;
+        line-height: 1.8;
+        max-width: 450px;
+    }
+
+    /* =========================
+       CTA
+    ========================= */
+
+    .cta {
+        min-height: 70vh;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        text-align: center;
+
+        padding: 100px 20px;
+    }
+
+    .cta h2 {
+        font-size: clamp(50px, 8vw, 110px);
+        letter-spacing: -6px;
+        line-height: .9;
+        max-width: 1000px;
+    }
+
+    .cta p {
+        margin: 30px auto;
+        color: #777;
+        max-width: 500px;
+        line-height: 1.7;
+    }
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    footer {
+        padding: 35px 5vw;
+
+        display: flex;
+        justify-content: space-between;
+
+        border-top: 1px solid #ddd;
+
+        color: #888;
+        font-size: 13px;
+    }
+
+    /* =========================
+       ANIMATION
+    ========================= */
+
+    @keyframes heroEnter {
+        from {
+            opacity: 0;
+            transform: translateY(40px);
         }
 
-        .foot_marker a {
-            color: rgba(255,255,255,0.8);
-            text-decoration: none;
-            transition: color 0.3s ease;
-            padding: 5px 10px;
-            border-radius: 15px;
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media(max-width: 800px) {
+
+        .nav-links {
+            display: none;
         }
 
-        .foot_marker a:hover {
-            color: #4388e0;
-        }        
-    </style>
+        .hero h1 {
+            letter-spacing: -4px;
+        }
+
+        .products {
+            grid-template-columns: 1fr;
+        }
+
+        .section-header {
+            display: block;
+        }
+
+        .section-subtitle {
+            margin-top: 15px;
+        }
+
+        .story {
+            grid-template-columns: 1fr;
+        }
+
+        .story-image {
+            min-height: 500px;
+        }
+
+        .story-content {
+            padding: 80px 8vw;
+        }
+
+        .hero-buttons {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        footer {
+            flex-direction: column;
+            gap: 10px;
+        }
+    }
+</style>
 </head>
+
 <body>
-    <div class="search-container">
-        <form action="https://www.google.com/search" method="get" target="_blank">
-            <input class="search-box" type="text" name="q" placeholder="Google 搜索...">
-        </form>
-    </div>
-    
-    <div class="container">
-        <!-- 第一行 -->
-        <div class="link-item">
-            <a href="https://www.google.com" target="_blank">
-                <img class="link-icon" src="https://www.google.com/favicon.ico" alt="Google">
-                <span class="link-text">Google</span>
-            </a>
-        </div>
-        <div class="link-item">
-            <a href="https://www.baidu.com" target="_blank">
-                <img class="link-icon" src="https://www.baidu.com/favicon.ico" alt="Baidu">
-                <span class="link-text">Baidu</span>
-            </a>
-        </div>
-        <div class="link-item">
-            <a href="https://www.youtube.com" target="_blank">
-                <img class="link-icon" src="https://www.youtube.com/favicon.ico" alt="YouTube">
-                <span class="link-text">Youtube</span>
-            </a>
-        </div>
-        <div class="link-item">
-            <a href="https://mail.google.com/mail/u/0/" target="_blank">
-                <img class="link-icon" src="https://mail.google.com/favicon.ico" alt="Gmail">
-                <span class="link-text">Gmail</span>
-            </a>
-        </div>
-        <div class="link-item">
-            <a href="https://github.com" target="_blank">
-                <img class="link-icon" src="https://github.com/favicon.ico" alt="GitHub">
-                <span class="link-text">GitHub</span>
-            </a>
-        </div>
-        <div class="link-item">
-            <a href="https://ip.sb" target="_blank">
-                <img class="link-icon" src="https://ip.sb/favicon.ico" alt="IP SB">
-                <span class="link-text">ip.sb</span>
-            </a>
-        </div>
-        
-        <!-- 第二行 -->
-        <div class="link-item">
-            <a href="https://dash.cloudflare.com" target="_blank">
-                <img class="link-icon" src="https://www.cloudflare.com/favicon.ico" alt="Cloudflare">
-                <span class="link-text">Cloudflare</span>
-            </a>
-        </div>
-        <div class="link-item">
-            <a href="https://chat.openai.com" target="_blank">
-                <img class="link-icon" src="https://chat.openai.com/favicon.ico" alt="ChatGPT">
-                <span class="link-text">Chatgpt</span>
-            </a>
-        </div>
-        <div class="link-item">
-            <a href="https://huggingface.co" target="_blank">
-                <img class="link-icon" src="https://huggingface.co/favicon.ico" alt="Hugging Face">
-                <span class="link-text">Huggingface</span>
-            </a>
-        </div>
-        <div class="link-item">
-            <a href="https://www.itdog.cn" target="_blank">
-                <i class="fas fa-network-wired link-icon"></i>
-                <span class="link-text">ITDOG - 在线ping</span>
-            </a>
-        </div>
-        <div class="link-item">
-            <a href="https://ping0.cc" target="_blank">
-                <i class="fas fa-database link-icon"></i>
-                <span class="link-text">Ping0</span>
-            </a>
-        </div>
-        <div class="link-item">
-            <a href="#" target="_blank">
-                <i class="fas fa-fingerprint link-icon"></i>
-                <span class="link-text">浏览器指纹</span>
-            </a>
-        </div>
-        
-        <!-- 第三行 -->
-        <div class="link-item">
-            <a href="https://ssss.nyc.mn" target="_blank">
-                <i class="fas fa-tachometer-alt link-icon"></i>
-                <span class="link-text">nezha面板</span>
-            </a>
-        </div>
-        <div class="link-item">
-            <a href="https://hoppscotch.io" target="_blank">
-                <img class="link-icon" src="https://discord.com/favicon.ico" alt="Discord">
-                <span class="link-text">Api测试</span>
-            </a>
-        </div>
-        <div class="link-item">
-            <a href="https://who.cx" target="_blank">
-                <i class="fas fa-globe link-icon"></i>
-                <span class="link-text">who.cx</span>
-            </a>
-        </div>
-        <div class="link-item">
-            <a href="https://www.domcomp.com" target="_blank">
-                <i class="fas fa-tags link-icon"></i>
-                <span class="link-text">域名比价</span>
-            </a>
-        </div>
-        
-        <div class="link-item">
-            <a href="https://www.nodeseek.com" target="_blank">
-                <i class="fas fa-server link-icon"></i>
-                <span class="link-text">NodeSeek</span>
-            </a>
-        </div>
-        <div class="link-item">
-            <a href="https://linux.do" target="_blank">
-                <i class="fab fa-linux link-icon"></i>
-                <span class="link-text">Linux do</span>
-            </a>
-        </div>
-        
-        <!-- 第四行 -->
-        <div class="link-item">
-            <a href="https://music.gvrander.eu.org" target="_blank">
-                <i class="fab fa-linux link-icon"></i>
-                <span class="link-text">在线音乐</span>
-            </a>           
-        </div>
-        <div class="link-item">
-            <a href="https://www.freereceivesms.com" target="_blank">
-                <i class="fab fa-linux link-icon"></i>
-                <span class="link-text">免费接码</span>
-            </a> 
-        </div>
-        <div class="link-item">
-            <a href="https://sublink.eooce.com" target="_blank">
-                <i class="fab fa-linux link-icon"></i>
-                <span class="link-text">订阅转换</span>
-            </a> 
-        </div>
-        <div class="link-item">
-            <a href="https://ssh.eooce.com" target="_blank">
-                <i class="fab fa-linux link-icon"></i>
-                <span class="link-text">webssh</span>
-            </a> 
-        </div>
-        <div class="link-item">
-            <a href="https://filebox.nnuu.nyc.mn" target="_blank">
-                <i class="fab fa-linux link-icon"></i>
-                <span class="link-text">文件快递柜</span>
-            </a> 
-        </div>
-        <div class="link-item">
-            <a href="https://address.nnuu.nyc.mn" target="_blank">
-                <i class="fab fa-linux link-icon"></i>
-                <span class="link-text">真实地址生成</span>
-            </a> 
-        </div>
 
-        <!-- 版权 -->
-        <div class="foot_marker">
-        <a href="https://github.com/eooce" target="_blank">Powered by eooce</a>
+<!-- NAVIGATION -->
+
+<header class="navbar">
+
+    <div class="logo">
+        ATELIER
     </div>
 
-    <script>
-        document.querySelectorAll('.link-item:not(.empty)').forEach(item => {
-            const icon = item.querySelector('img.link-icon');
-            if (icon) {
-                icon.onerror = function() {
-                    this.src = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTEyIDJDNi40NzcgMiAyIDYuNDc3IDIgMTJzNC40NzcgMTAgMTAgMTAgMTAtNC40NzcgMTAtMTBTMTcuNTIzIDIgMTIgMnptMCAyYzQuNDE4IDAgOCAzLjU4MiA4IDhzLTMuNTgyIDgtOCA4LTgtMy41ODItOC04IDMuNTgyLTggOC04eiIgZmlsbD0iIzMzMyIvPjwvc3ZnPg==';
-                }
-            }
-        });
-    </script>
+    <nav class="nav-links">
+        <a href="#shop">Shop</a>
+        <a href="#story">Our Story</a>
+        <a href="#journal">Journal</a>
+    </nav>
+
+    <div class="nav-actions">
+        <span class="cart">Cart (0)</span>
+        <a href="#shop" class="nav-button">
+            Explore
+        </a>
+    </div>
+
+</header>
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <div class="eyebrow">
+            Designed for everyday living
+        </div>
+
+        <h1>
+            Less noise.<br>
+            <span>More meaning.</span>
+        </h1>
+
+        <p class="hero-description">
+            Thoughtfully designed objects for people who
+            appreciate simplicity, quality, and timeless form.
+        </p>
+
+        <div class="hero-buttons">
+
+            <a href="#shop" class="primary-btn">
+                Shop Collection
+            </a>
+
+            <a href="#story" class="secondary-btn">
+                Discover Our Story
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- PRODUCTS -->
+
+<section class="section" id="shop">
+
+    <div class="section-header">
+
+        <h2 class="section-title">
+            New arrivals
+        </h2>
+
+        <p class="section-subtitle">
+            A curated selection of pieces designed
+            to become part of your everyday.
+        </p>
+
+    </div>
+
+
+    <div class="products">
+
+        <div class="product">
+
+            <img
+                class="product-image"
+                src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1000&q=90"
+            >
+
+            <div class="product-overlay">
+
+                <div class="product-name">
+                    Essential Watch
+                </div>
+
+                <div class="product-price">
+                    $189
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="product">
+
+            <img
+                class="product-image"
+                src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1000&q=90"
+            >
+
+            <div class="product-overlay">
+
+                <div class="product-name">
+                    Morning Ritual
+                </div>
+
+                <div class="product-price">
+                    $64
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="product">
+
+            <img
+                class="product-image"
+                src="https://images.unsplash.com/photo-1494438639946-1ebd1d20bf85?auto=format&fit=crop&w=1000&q=90"
+            >
+
+            <div class="product-overlay">
+
+                <div class="product-name">
+                    Daily Carry
+                </div>
+
+                <div class="product-price">
+                    $129
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- STORY -->
+
+<section class="story" id="story">
+
+    <div class="story-image">
+
+        <img
+            src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1400&q=90"
+        >
+
+    </div>
+
+    <div class="story-content">
+
+        <span>
+            Our philosophy
+        </span>
+
+        <h2>
+            Built to<br>
+            last.
+        </h2>
+
+        <p>
+            We believe good design should feel effortless.
+            Every detail is considered, every material is
+            chosen with intention, and every product is made
+            to live with you for years.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- CTA -->
+
+<section class="cta" id="journal">
+
+    <div>
+
+        <h2>
+            Make space<br>
+            for better things.
+        </h2>
+
+        <p>
+            Discover the collection and find something
+            worth keeping.
+        </p>
+
+        <a href="#shop" class="primary-btn">
+            Explore Collection
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    <span>
+        © 2026 ATELIER
+    </span>
+
+    <span>
+        Designed with intention.
+    </span>
+
+</footer>
+
 </body>
 </html>
